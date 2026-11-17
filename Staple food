@@ -1,0 +1,353 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "b1c372ef-2877-46ad-9824-0a3fe0979a94",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import glob\n",
+    "garri = pd.read_csv(\"level2_price_garri.csv\")\n",
+    "rice = pd.read_csv(\"level2_price_local_rice.csv\")\n",
+    "brownbeans = pd.read_csv(\"level2_price_brown_beans.csv\")\n",
+    "Importedrice = pd.read_csv(\"level2_price_imported_rice.csv\")\n",
+    "sorghum = pd.read_csv(\"level2_price_sorghum.csv\")\n",
+    "soybean = pd.read_csv(\"level2_price_soybean.csv\")\n",
+    "whitebeans = pd.read_csv(\"level2_price_white_beans.csv\")\n",
+    "whitemaize = pd.read_csv(\"level2_price_white_maize.csv\")\n",
+    "yam = pd.read_csv(\"level2_price_yam.csv\")\n",
+    "yellowmaize = pd.read_csv(\"level2_price_yellow_maize.csv\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "424b3b0d-89e7-4496-9a1f-10a61f41d443",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "garri (202731, 25) ['fid', 'submissio', 'date', 'zonecode1', 'geopol_zon', 'statecode1', 'zonelabel1', 'statelabel', 'lga', 'lgalabel', 'sector', 'staff_vali', 'consent', 'market_typ', 'price_cate', 'market_tim', 'gps_latitu', 'gps_longit', 'count', 'month', 'price', 'commodity', 'daily_mean', 'daily_sd', 'outlier_flag']\n",
+      "local_rice (198630, 25) ['fid', 'submissio', 'date', 'zonecode1', 'geopol_zon', 'statecode1', 'zonelabel1', 'statelabel', 'lga', 'lgalabel', 'sector', 'staff_vali', 'consent', 'market_typ', 'price_cate', 'market_tim', 'gps_latitu', 'gps_longit', 'count', 'month', 'price', 'commodity', 'daily_mean', 'daily_sd', 'outlier_flag']\n",
+      "brown_beans (175526, 25) ['fid', 'submissio', 'date', 'zonecode1', 'geopol_zon', 'statecode1', 'zonelabel1', 'statelabel', 'lga', 'lgalabel', 'sector', 'staff_vali', 'consent', 'market_typ', 'price_cate', 'market_tim', 'gps_latitu', 'gps_longit', 'count', 'month', 'price', 'commodity', 'daily_mean', 'daily_sd', 'outlier_flag']\n",
+      "imported_rice (141612, 25) ['fid', 'submissio', 'date', 'zonecode1', 'geopol_zon', 'statecode1', 'zonelabel1', 'statelabel', 'lga', 'lgalabel', 'sector', 'staff_vali', 'consent', 'market_typ', 'price_cate', 'market_tim', 'gps_latitu', 'gps_longit', 'count', 'month', 'price', 'commodity', 'daily_mean', 'daily_sd', 'outlier_flag']\n",
+      "sorghum (185067, 25) ['fid', 'submissio', 'date', 'zonecode1', 'geopol_zon', 'statecode1', 'zonelabel1', 'statelabel', 'lga', 'lgalabel', 'sector', 'staff_vali', 'consent', 'market_typ', 'price_cate', 'market_tim', 'gps_latitu', 'gps_longit', 'count', 'month', 'price', 'commodity', 'daily_mean', 'daily_sd', 'outlier_flag']\n",
+      "soybean (186293, 25) ['fid', 'submissio', 'date', 'zonecode1', 'geopol_zon', 'statecode1', 'zonelabel1', 'statelabel', 'lga', 'lgalabel', 'sector', 'staff_vali', 'consent', 'market_typ', 'price_cate', 'market_tim', 'gps_latitu', 'gps_longit', 'count', 'month', 'price', 'commodity', 'daily_mean', 'daily_sd', 'outlier_flag']\n",
+      "white_beans (202059, 25) ['fid', 'submissio', 'date', 'zonecode1', 'geopol_zon', 'statecode1', 'zonelabel1', 'statelabel', 'lga', 'lgalabel', 'sector', 'staff_vali', 'consent', 'market_typ', 'price_cate', 'market_tim', 'gps_latitu', 'gps_longit', 'count', 'month', 'price', 'commodity', 'daily_mean', 'daily_sd', 'outlier_flag']\n",
+      "white_maize (199828, 25) ['fid', 'submissio', 'date', 'zonecode1', 'geopol_zon', 'statecode1', 'zonelabel1', 'statelabel', 'lga', 'lgalabel', 'sector', 'staff_vali', 'consent', 'market_typ', 'price_cate', 'market_tim', 'gps_latitu', 'gps_longit', 'count', 'month', 'price', 'commodity', 'daily_mean', 'daily_sd', 'outlier_flag']\n",
+      "yam (173180, 25) ['fid', 'submissio', 'date', 'zonecode1', 'geopol_zon', 'statecode1', 'zonelabel1', 'statelabel', 'lga', 'lgalabel', 'sector', 'staff_vali', 'consent', 'market_typ', 'price_cate', 'market_tim', 'gps_latitu', 'gps_longit', 'count', 'month', 'price', 'commodity', 'daily_mean', 'daily_sd', 'outlier_flag']\n",
+      "yellow_maize (190873, 25) ['fid', 'submissio', 'date', 'zonecode1', 'geopol_zon', 'statecode1', 'zonelabel1', 'statelabel', 'lga', 'lgalabel', 'sector', 'staff_vali', 'consent', 'market_typ', 'price_cate', 'market_tim', 'gps_latitu', 'gps_longit', 'count', 'month', 'price', 'commodity', 'daily_mean', 'daily_sd', 'outlier_flag']\n"
+     ]
+    }
+   ],
+   "source": [
+    "frames = {\n",
+    "    \"garri\": garri, \"local_rice\": rice, \"brown_beans\": brownbeans,\n",
+    "    \"imported_rice\": Importedrice, \"sorghum\": sorghum, \"soybean\": soybean,\n",
+    "    \"white_beans\": whitebeans, \"white_maize\": whitemaize, \"yam\": yam,\n",
+    "    \"yellow_maize\": yellowmaize,\n",
+    "}\n",
+    "\n",
+    "for name, df in frames.items():\n",
+    "    print(name, df.shape, list(df.columns))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "437e0a9d-8eda-44a3-8f8b-56c59a7a4b02",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(1855799, 25)\n",
+      "commodity\n",
+      "Garri            202731\n",
+      "White Beans      202059\n",
+      "White Maize      199828\n",
+      "Local Rice       198630\n",
+      "Yellow Maize     190873\n",
+      "Soybean          186293\n",
+      "Sorghum          185067\n",
+      "Brown Beans      175526\n",
+      "Yam              173180\n",
+      "Imported Rice    141612\n",
+      "Name: count, dtype: int64\n",
+      "        date statelabel        price outlier_flag\n",
+      "0  12/3/2024    BAYELSA   700.000000  non-outlier\n",
+      "1  12/3/2024    BAYELSA   700.000000  non-outlier\n",
+      "2  12/3/2024    BAYELSA  1524.390244  non-outlier\n",
+      "3  12/3/2024    KATSINA  1428.571429  non-outlier\n",
+      "4  12/4/2024      DELTA  1585.365854  non-outlier\n"
+     ]
+    }
+   ],
+   "source": [
+    "all_crops = pd.concat(frames.values(), ignore_index=True)\n",
+    "print(all_crops.shape)\n",
+    "print(all_crops[\"commodity\"].value_counts())\n",
+    "print(all_crops[[\"date\", \"statelabel\", \"price\", \"outlier_flag\"]].head())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "5e8b9ed8-fc2d-4447-8839-b86e89d844d2",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "outlier_flag\n",
+      "non-outlier    1855799\n",
+      "Name: count, dtype: int64\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(all_crops[\"outlier_flag\"].value_counts())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "fb58e8b6-022a-440c-bd98-15f730f5f176",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "                  count         mean          std    min          25%  \\\n",
+      "commodity                                                               \n",
+      "Brown Beans    175526.0  1961.534236   608.516477  100.0  1500.000000   \n",
+      "Garri          202731.0  1318.749838   520.164715  100.0   900.900901   \n",
+      "Imported Rice  141612.0  2802.885188  1079.900143  100.0  1928.571429   \n",
+      "Local Rice     198630.0  1988.238386   641.344627  100.0  1466.666667   \n",
+      "Sorghum        185067.0  1121.497616   600.263069  100.0   733.333333   \n",
+      "Soybean        186293.0  1472.122737   485.759277  100.0  1125.000000   \n",
+      "White Beans    202059.0  1701.729641   537.485659  100.0  1250.000000   \n",
+      "White Maize    199828.0  1132.229728   510.353606  100.0   769.230769   \n",
+      "Yam            173180.0  1296.700958   578.668327  100.0   857.142857   \n",
+      "Yellow Maize   190873.0  1167.801155   545.100444  100.0   769.230769   \n",
+      "\n",
+      "                       50%          75%          max  \n",
+      "commodity                                             \n",
+      "Brown Beans    1900.000000  2357.142857  4440.000000  \n",
+      "Garri          1181.818182  1818.181818  3142.857143  \n",
+      "Imported Rice  2566.666667  3571.428571  6000.000000  \n",
+      "Local Rice     1866.666667  2457.142857  4573.170732  \n",
+      "Sorghum         937.500000  1333.333333  4000.000000  \n",
+      "Soybean        1384.615385  1785.714286  4230.769231  \n",
+      "White Beans    1678.571429  2000.000000  4285.714286  \n",
+      "White Maize    1000.000000  1307.692308  3500.000000  \n",
+      "Yam            1142.857143  1600.000000  4600.000000  \n",
+      "Yellow Maize   1044.776119  1384.615385  3625.000000  \n"
+     ]
+    }
+   ],
+   "source": [
+    "print(all_crops.groupby(\"commodity\")[\"price\"].describe())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "d1d4f0c0-d7fd-4ca7-a86e-3338fd74518e",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "2024-12-03 00:00:00 2025-06-29 00:00:00\n",
+      "0 dates failed to parse\n"
+     ]
+    }
+   ],
+   "source": [
+    "all_crops[\"date\"] = pd.to_datetime(all_crops[\"date\"], format=\"%m/%d/%Y\", errors=\"coerce\")\n",
+    "print(all_crops[\"date\"].min(), all_crops[\"date\"].max())\n",
+    "print(all_crops[\"date\"].isna().sum(), \"dates failed to parse\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "95cc96a8-c2b6-4f33-9088-5852519e4772",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "(2590, 4)\n",
+      "     commodity statelabel    month        price\n",
+      "0  Brown Beans       ABIA  2024-12  2761.800000\n",
+      "1  Brown Beans       ABIA  2025-01  2686.410398\n",
+      "2  Brown Beans       ABIA  2025-02  2522.229261\n",
+      "3  Brown Beans       ABIA  2025-03  2432.134281\n",
+      "4  Brown Beans       ABIA  2025-04  2283.403509\n"
+     ]
+    }
+   ],
+   "source": [
+    "all_crops[\"month\"] = all_crops[\"date\"].dt.to_period(\"M\")\n",
+    "\n",
+    "monthly = (\n",
+    "    all_crops.groupby([\"commodity\", \"statelabel\", \"month\"])[\"price\"]\n",
+    "    .mean()\n",
+    "    .reset_index()\n",
+    ")\n",
+    "\n",
+    "print(monthly.shape)\n",
+    "print(monthly.head())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "8bea3f5c-5951-44ed-a059-b5e71e522c3f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Saved to C:\\Users\\user\\Documents\\crop_project\\clean_data\n"
+     ]
+    }
+   ],
+   "source": [
+    "import os\n",
+    "folder = os.path.join(os.path.expanduser(\"~\"), \"Documents\", \"crop_project\", \"clean_data\")\n",
+    "os.makedirs(folder, exist_ok=True)\n",
+    "monthly.to_csv(os.path.join(folder, \"crop_prices_monthly.csv\"), index=False)\n",
+    "print(\"Saved to\", folder)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "3729d95b-a323-4bec-9a30-b1c38c44e805",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "commodity\n",
+      "Yam             -21.2\n",
+      "Brown Beans     -18.8\n",
+      "White Beans     -17.7\n",
+      "Yellow Maize    -15.6\n",
+      "Imported Rice   -15.2\n",
+      "White Maize     -14.5\n",
+      "Local Rice      -12.9\n",
+      "Sorghum         -12.2\n",
+      "Soybean          -9.7\n",
+      "Garri            14.9\n",
+      "Name: price, dtype: float64\n"
+     ]
+    }
+   ],
+   "source": [
+    "start = monthly[monthly[\"month\"] == \"2024-12\"].groupby(\"commodity\")[\"price\"].mean()\n",
+    "end = monthly[monthly[\"month\"] == \"2025-06\"].groupby(\"commodity\")[\"price\"].mean()\n",
+    "change = ((end - start) / start * 100).round(1).sort_values()\n",
+    "print(change)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "edf1bc56-295b-4a68-9261-bc0f0ad179b4",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "statelabel\n",
+      "YOBE       12\n",
+      "KOGI        9\n",
+      "TARABA      8\n",
+      "BENUE       6\n",
+      "BORNO       4\n",
+      "PLATEAU     4\n",
+      "LAGOS       4\n",
+      "KATSINA     4\n",
+      "RIVERS      4\n",
+      "GOMBE       3\n",
+      "Name: count, dtype: int64\n",
+      "market_typ\n",
+      "Open air_or_covered market       29\n",
+      "Neighborhood_shops_kiosk         17\n",
+      "RoadSide_shops_street vendors    16\n",
+      "Local_village_market              5\n",
+      "Specialized_stores                4\n",
+      "City_market                       3\n",
+      "Bulk_and_discount stores          3\n",
+      "Supermarket                       2\n",
+      "Directly_from_Farmer              2\n",
+      "Name: count, dtype: int64\n",
+      "date\n",
+      "2025-03-27    3\n",
+      "2025-06-15    3\n",
+      "2025-06-22    3\n",
+      "2025-03-15    3\n",
+      "2025-05-11    3\n",
+      "2025-06-01    2\n",
+      "2025-06-12    2\n",
+      "2025-06-14    2\n",
+      "2025-02-26    2\n",
+      "2025-06-05    2\n",
+      "Name: count, dtype: int64\n"
+     ]
+    }
+   ],
+   "source": [
+    "low = all_crops[all_crops[\"price\"] == 100]\n",
+    "print(low[\"statelabel\"].value_counts().head(10))\n",
+    "print(low[\"market_typ\"].value_counts())\n",
+    "print(low[\"date\"].value_counts().head(10))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0a1fe7e7-3aa7-4c21-9fdb-6447ef47df25",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python [conda env:base] *",
+   "language": "python",
+   "name": "conda-base-py"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.13.9"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
